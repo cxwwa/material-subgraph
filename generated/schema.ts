@@ -11,30 +11,30 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class EventTest extends Entity {
+export class TokenAmount extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("from", Value.fromBytes(Bytes.empty()));
-    this.set("to", Value.fromBytes(Bytes.empty()));
-    this.set("tokenId", Value.fromString(""));
+    this.set("type", Value.fromI32(0));
+    this.set("amount", Value.fromI32(0));
+    this.set("tokenIdList", Value.fromStringArray(new Array(0)));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save EventTest entity without an ID");
+    assert(id != null, "Cannot save TokenAmount entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type EventTest must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type TokenAmount must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("EventTest", id.toString(), this);
+      store.set("TokenAmount", id.toString(), this);
     }
   }
 
-  static load(id: string): EventTest | null {
-    return changetype<EventTest | null>(store.get("EventTest", id));
+  static load(id: string): TokenAmount | null {
+    return changetype<TokenAmount | null>(store.get("TokenAmount", id));
   }
 
   get id(): string {
@@ -46,30 +46,73 @@ export class EventTest extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get from(): Bytes {
-    let value = this.get("from");
-    return value!.toBytes();
+  get type(): i32 {
+    let value = this.get("type");
+    return value!.toI32();
   }
 
-  set from(value: Bytes) {
-    this.set("from", Value.fromBytes(value));
+  set type(value: i32) {
+    this.set("type", Value.fromI32(value));
   }
 
-  get to(): Bytes {
-    let value = this.get("to");
-    return value!.toBytes();
+  get amount(): i32 {
+    let value = this.get("amount");
+    return value!.toI32();
   }
 
-  set to(value: Bytes) {
-    this.set("to", Value.fromBytes(value));
+  set amount(value: i32) {
+    this.set("amount", Value.fromI32(value));
   }
 
-  get tokenId(): string {
-    let value = this.get("tokenId");
+  get tokenIdList(): Array<string> {
+    let value = this.get("tokenIdList");
+    return value!.toStringArray();
+  }
+
+  set tokenIdList(value: Array<string>) {
+    this.set("tokenIdList", Value.fromStringArray(value));
+  }
+}
+
+export class Account extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("tokensAmount", Value.fromStringArray(new Array(0)));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Account entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Account must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Account", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Account | null {
+    return changetype<Account | null>(store.get("Account", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
     return value!.toString();
   }
 
-  set tokenId(value: string) {
-    this.set("tokenId", Value.fromString(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get tokensAmount(): Array<string> {
+    let value = this.get("tokensAmount");
+    return value!.toStringArray();
+  }
+
+  set tokensAmount(value: Array<string>) {
+    this.set("tokensAmount", Value.fromStringArray(value));
   }
 }

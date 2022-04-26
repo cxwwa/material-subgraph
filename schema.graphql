@@ -1,6 +1,11 @@
-type EventTest @entity {
+type TokenAmount @entity {
   id: ID!
-  from: Bytes!
-  to: Bytes!
-  tokenId: String!
+  type: Int!
+  amount: Int!
+  tokenIdList: [String!]!
+}
+
+type Account @entity {
+  id: ID!
+  tokensAmount: [TokenAmount!]!
 }
