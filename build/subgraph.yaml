@@ -1,6 +1,6 @@
 specVersion: 0.0.3
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: objectOwnership
@@ -17,8 +17,8 @@ dataSources:
         - EventTest
       abis:
         - name: objectOwnership
-          file: ./abis/objectOwnership.json
+          file: objectOwnership/abis/objectOwnership.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,indexed uint256)
           handler: handleTransfer
-      file: ./src/mapping.ts
+      file: objectOwnership/objectOwnership.wasm
